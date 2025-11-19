@@ -1,10 +1,10 @@
-import { ICurrencyProvider } from "./icurrency-provider";
+import { ICurrencyProvider } from "./interfaces/icurrency-provider";
 import fetch from "node-fetch";
 
-export class ExchangeRateAPIProvider implements ICurrencyProvider {
+export class ExchangeRateService implements ICurrencyProvider {
   async getRate(from: string, to: string): Promise<number> {
     const res = await fetch(
-      `https://api.exchangerate-api.com/v4/latest/${from}`
+      `https://v6.exchangerate-api.com/v6/a31e6ac674d0df272832d3dc/latest/${from}`
     );
     if (!res.ok) throw new Error("External API error");
     const data = await res.json();

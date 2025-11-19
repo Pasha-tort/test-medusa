@@ -1,11 +1,17 @@
 import { Modules } from "@medusajs/framework/utils";
-import { ICurrencyProvider } from "./providers/icurrency-provider";
+import { ExchangeRateService } from "./services";
+
+type InjectedDependencies = {
+  exchangeRateService: ExchangeRateService;
+  caching: typeof Modules.CACHING;
+};
 
 export class CurrencyService {
-  private readonly _cachingService: any;
-  constructor(private deps, private provider: ICurrencyProvider) {
-    console.log(deps);
+  protected readonly _cachingService: any;
+  protected readonly _exchangeRateService: ExchangeRateService;
+  constructor(deps: InjectedDependencies) {
     this._cachingService = deps.caching;
+    this._exchangeRateService = deps.exchangeRateService;
   }
 
   async convert(from: string, to: string, amount: number) {
@@ -14,7 +20,7 @@ export class CurrencyService {
     let rate = await this._cachingService.get({ key: cacheKey });
 
     if (!rate) {
-      rate = await this.provider.getRate(from, to);
+      rate = await this._exchangeRateService.getRate(from, to);
       await this._cachingService.set({ key: cacheKey, data: rate, ttl: 3600 });
     }
 

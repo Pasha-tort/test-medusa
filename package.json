@@ -26,6 +26,7 @@
     "@medusajs/cli": "2.11.3",
     "@medusajs/framework": "2.11.3",
     "@medusajs/medusa": "2.11.3",
+    "currency-codes": "^2.2.0",
     "ioredis": "^5.8.2"
   },
   "devDependencies": {
