@@ -4,8 +4,9 @@ import fetch from "node-fetch";
 
 export class ExchangeRateService implements ICurrencyProvider {
   async getRate(from: string, to: string): Promise<number> {
+    // new DomainError("External API request error");
     const res = await fetch(
-      `https://v6.exchangerate-api.com/v6/a31e6ac674d0df272832d3dc/latest/${from}`
+      `https://v6.exchangerate-api.com/v6/${process.env.EXCHANGERATE_API_KEY}/latest/${from}`
     ).catch((error) => {
       console.error(error);
       throw new DomainError("External API request error");
