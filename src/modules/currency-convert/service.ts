@@ -9,13 +9,18 @@ type InjectedDependencies = {
 export class CurrencyService {
   protected readonly _cachingService: any;
   protected readonly _exchangeRateService: ExchangeRateService;
+
   constructor(deps: InjectedDependencies) {
     this._cachingService = deps.caching;
     this._exchangeRateService = deps.exchangeRateService;
   }
 
+  getKind(from: string, to: string) {
+    return `currency-convert:${from}:${to}`;
+  }
+
   async convert(from: string, to: string, amount: number) {
-    const cacheKey = `currency-convert:${from}:${to}`;
+    const cacheKey = this.getKind(from, to);
 
     let rate = await this._cachingService.get({ key: cacheKey });
 

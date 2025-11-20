@@ -3,6 +3,7 @@ import {
   validateAndTransformQuery,
 } from "@medusajs/framework/http";
 import { GetStoreCurrencyConvertSchema } from "./store/currency/convert/validators";
+import { exceptionFilter } from "@common/filters";
 
 export default defineMiddlewares({
   routes: [
@@ -14,4 +15,5 @@ export default defineMiddlewares({
       ],
     },
   ],
+  errorHandler: exceptionFilter,
 });

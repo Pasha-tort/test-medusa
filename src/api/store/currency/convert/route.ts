@@ -5,14 +5,18 @@ import { TOKEN_CURRENCY_SERVICE } from "@modules/currency-convert";
 
 export const GET = async (
   req: MedusaRequest<unknown, GetStoreCurrencyConvertQuery>,
-  res: MedusaResponse
+  res: MedusaResponse,
+  next
 ) => {
   const { amount, from, to } = req.validatedQuery;
 
   const currencyService = req.scope.resolve<CurrencyService>(
     TOKEN_CURRENCY_SERVICE
   );
-  const converted = await currencyService.convert(from, to, amount);
-
-  res.json({ amount, from, to, converted });
+  try {
+    const converted = await currencyService.convert(from, to, amount);
+    res.json({ amount, from, to, converted });
+  } catch (error) {
+    next(error);
+  }
 };

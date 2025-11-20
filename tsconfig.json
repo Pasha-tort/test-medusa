@@ -19,7 +19,8 @@
     "checkJs": false,
     "strictNullChecks": true,
     "paths": {
-      "@modules/*": ["./src/modules/*"]
+      "@modules/*": ["./src/modules/*"],
+      "@common/*": ["./src/common/*"]
     }
   },
   "ts-node": {
